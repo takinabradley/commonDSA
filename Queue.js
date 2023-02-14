@@ -39,21 +39,12 @@ function Queue() {
     }
   }
 
-  const queueInterface = Object.create(null)
-  queueInterface.enqueue = enqueue
-  queueInterface.dequeue = dequeue
-  Object.defineProperties(queueInterface, {
-    front: {
-      enumerable: true,
-      get() {return front}
-    },
-    rear: {
-      enumerable: true,
-      get() {return rear}
-    }
+  return Object.create(null, {
+    enqueue: {enumerable: true, value: enqueue},
+    dequeue: {enumerable: true, value: dequeue},
+    front: {enumerable: true, get() {return front}},
+    rear: {enumerable: true, get() {return rear}}
   })
-
-  return queueInterface
 }
 
 export default Queue
