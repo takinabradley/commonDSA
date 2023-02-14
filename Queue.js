@@ -80,4 +80,57 @@ function LimitedQueue(length) {
   }
 }
 
+function LimitedQueue2(size) {
+  if(!size) throw TypeError("LimitedQueue must have a length!")
+  let currentLength = 0;
+  let front = null
+  let rear = null
+
+  const isFull = () => currentLength === size
+  function enqueue(value) {
+    const newNode = QueueNode(value)
+    if(rear === null) {
+      currentLength++
+      //if queue is empty, set front and rear to the only node
+      front = newNode
+      rear = newNode
+      return
+    }
+
+    if(isFull()) throw Error("LimitedQueue is full!")
+    currentLength++
+    rear.next = newNode
+    rear = newNode
+  }
+
+  function dequeue() {
+    if(front === null) {
+      //if empty, return nothing
+      return null
+    } else if(front.next === null) {
+      currentLength--
+      // if it's the last item, return the last item and set pointers to null
+      const value = front.value
+      rear = null
+      front = null
+      return value
+    } else {
+      currentLength--
+      // otherwise, pop the last value off the queue and set front to next node
+      const value = front.value
+      front = front.next
+      return value
+    }
+  }
+
+  return Object.create(null, {
+    enqueue: {enumerable: true, value: enqueue},
+    dequeue: {enumerable: true, value: dequeue},
+    front: {enumerable: true, get() {return front}},
+    rear: {enumerable: true, get() {return rear}},
+    currentLength: {enumerable: true, get() {return currentLength}},
+    size: {enumerable: true, get() {return size}}
+  })
+}
+
 export default {Queue, LimitedQueue}
