@@ -1,29 +1,33 @@
+import Queue from './Queue.js'
+
 function BinaryNode(value) {
-  return {
-    value,
-    left: null,
-    right: null
-  }
+  const node = Object.create(null)
+  node.value = value,
+  node.left = null
+  node.right = null
+  return node
 }
 
-function traverseTree(tree) {
+function traverseDepth(tree) {
+  /*preorder*/
+  /* also inorder (left -> root -> right) and postorder (left -> right -> root) */
+  /* is it as easy as just changing where the log is in the search? */
   if(tree === null) return
   console.log(tree.value)
-  traverseTree(tree.right)
-  traverseTree(tree.left)
+  traverseDepth(tree.right)
+  traverseDepth(tree.left)
 }
 
-/* lol I guess it's not that easy.
-function traverseTreeBreadth(tree, left = tree.left, right = tree.right) {
-  if(tree.isHead) console.log(tree.value)
-  // add check to see if tree value is the value if we're searching
-  if(tree === null) return
-  if(left === null && right === null) return
-  console.log(left.value)
-  console.log(right.value)
-  traverseTree(left)
-  traverseTree(right)
-} */
+function traverseBreadth(tree, queue = Queue()) {
+  if(queue.front === null) queue.enqueue(tree)
+  while(queue.front !== null) {
+    const dequeued = queue.dequeue() 
+    if(dequeued === null) {console.log('is null');break}
+    console.log(dequeued.value)
+    if(dequeued.left) queue.enqueue(dequeued.left)
+    if(dequeued.right) queue.enqueue(dequeued.right)
+  }
+}
 
 function placeInTree(tree, node) {
   if(tree.left === null && node.value < tree.value) {
@@ -55,10 +59,10 @@ function makeTree(arr) {
 
   return head
 }
-const myTree = makeTree([8, 1, 4, 3, 5, 4, 2, 0, 8, 7, 6, 1, 2])
+const myTree = makeTree([5, 1, 2, 3, 6, 7, 8])
 console.log('mytree', myTree)
 
 console.log('regualar traversal')
-traverseTree(myTree)
+traverseDepth(myTree) 
 console.log('breadth traversal')
-traverseTreeBreadth(myTree)
+traverseBreadth(myTree)
