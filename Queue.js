@@ -47,4 +47,37 @@ function Queue() {
   })
 }
 
-export default Queue
+function LimitedQueue(length) {
+  if(!length) throw TypeError("LimitedQueue must have a limit!")
+  // We lose an index due to our end pointer, so we ++ it.
+  length = length + 1
+  const queue = new Array(length).fill(null)
+  let front = 0
+  let end = 0
+
+  const isFull = () => (front - 1 === end) || (front === 0 && end === length - 1)
+  const isEmpty = () => end === front
+  const enqueue = (value) => {
+    if(isFull()) throw Error("Full!")
+    queue[end] = value
+    end++
+    if(end === length) end = 0
+  }
+
+  const dequeue = () => {
+    if(isEmpty()) return null
+    const value = queue[front]
+    front++
+    if(front === length) front = 0
+    return value
+  }
+
+  return {
+    get front() {return front},
+    get end() {return end},
+    enqueue,
+    dequeue
+  }
+}
+
+export default {Queue, LimitedQueue}
