@@ -105,7 +105,7 @@ function LinkedList() {
       return headValue
     }
 
-    const secondToLastNode = nodeAt(head, size - 1)
+    const secondToLastNode = nodeAt(head, size - 2)
     const oldTail = tail
     secondToLastNode.next = null
     tail = secondToLastNode
