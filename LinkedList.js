@@ -92,7 +92,7 @@ function LinkedList() {
   const nodeAt = (list, index, count = 0) => {
     if(list === null) return
     if(count === index) return list
-    return nodeAt(list, index, ++count)
+    return nodeAt(list.next, index, ++count)
   }
 
   const pop = () => {
