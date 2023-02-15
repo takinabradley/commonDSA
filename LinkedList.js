@@ -95,6 +95,27 @@ function LinkedList() {
     return nodeAt(list.next, index, ++count)
   }
 
+  const removeAt = (index) => {
+    if(index < 0 || index >= size) return false
+    if(size === 0) return false
+    if((index + 1) === size) {
+      console.log('popping...')
+      pop()
+      return true
+    }
+    if(index === 0) {
+      --size
+      head = head.next
+      return true
+    }
+
+    --size
+    const nodeBefore = nodeAt(head, index - 1)
+    const removedNode = nodeAt(head, index)
+    nodeBefore.next = removedNode.next
+    return true
+  }
+
   const pop = () => {
     if(size === 0) return null
     if(size === 1) {
@@ -105,10 +126,15 @@ function LinkedList() {
       return headValue
     }
 
-    const secondToLastNode = nodeAt(head, size - 2)
+    
+    const secondToLastNode = nodeAt(head, size - 1)
+    console.log('secondToLast', {...secondToLastNode})
+    
     const oldTail = tail
+    console.log('oldtail', tail)
     secondToLastNode.next = null
     tail = secondToLastNode
+    console.log('newTail/secondToLastNode with new next', {...tail})
     --size
     return oldTail.value
   }
@@ -120,7 +146,8 @@ function LinkedList() {
     contains,
     find,
     toString,
-    pop
+    pop,
+    removeAt
   })
   addGetter(linkedList, 'head', () => head)
   addGetter(linkedList, 'tail', () => tail)
