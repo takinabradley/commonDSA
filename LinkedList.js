@@ -77,7 +77,7 @@ function LinkedList() {
 
   const traverseList = (list, callback) => {
     if(list === null) return
-    if(callback === 'function') callback(list)
+    if(typeof callback === 'function') callback(list)
     return traverseList(list.next, callback)
   }
 
