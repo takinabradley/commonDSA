@@ -84,7 +84,8 @@ function LinkedList() {
   const toString = () => {
     if(head === null) return 'null'
     let string = ''
-    traverseList(head, (node) => string += `(${node.value}) -> `)
+    traverseList(head, (node) => (string += `(${node.value}) -> `) )
+    console.log(string)
     string += 'null'
     return string
   }
@@ -116,6 +117,35 @@ function LinkedList() {
     return true
   }
 
+  const insertAt = (index, value) => {
+    if(index === undefined || index > size || index < 0) return false
+    if(size === 0) {
+      append(value)
+      return true
+    }
+    if(index === 0) {
+      prepend(value)
+      return true
+    }
+    if(index === size) {
+      const newTail = Node(value)
+      const oldTail = tail
+      oldTail.next = newTail
+      newTail.next = null
+      tail = newTail
+      size++
+      return true
+    }
+    
+    const newNode = Node(value)
+    const nodeBefore = nodeAt(head, index - 1)
+    const nodeAtIndex = nodeAt(head, index)
+    nodeBefore.next = newNode
+    newNode.next = nodeAtIndex
+    size++
+    return true
+  }
+
   const pop = () => {
     if(size === 0) return null
     if(size === 1) {
@@ -128,13 +158,10 @@ function LinkedList() {
 
     
     const secondToLastNode = nodeAt(head, size - 1)
-    console.log('secondToLast', {...secondToLastNode})
     
     const oldTail = tail
-    console.log('oldtail', tail)
     secondToLastNode.next = null
     tail = secondToLastNode
-    console.log('newTail/secondToLastNode with new next', {...tail})
     --size
     return oldTail.value
   }
@@ -147,7 +174,8 @@ function LinkedList() {
     find,
     toString,
     pop,
-    removeAt
+    removeAt, 
+    insertAt
   })
   addGetter(linkedList, 'head', () => head)
   addGetter(linkedList, 'tail', () => tail)
