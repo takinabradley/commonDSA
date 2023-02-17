@@ -133,4 +133,4 @@ function LimitedQueue2(size) {
   })
 }
 
-export default {Queue, LimitedQueue}
+export {Queue, LimitedQueue}
