@@ -1,4 +1,5 @@
-import Queue from './Queue.js'
+import {Queue} from './Queue.js'
+import Stack from './Stack.js'
 
 function BinaryNode(value) {
   const node = Object.create(null)
@@ -16,6 +17,22 @@ function traverseDepth(tree) {
   console.log(tree.value)
   traverseDepth(tree.right)
   traverseDepth(tree.left)
+}
+['a','b','c','d']
+function traverseDepthWithStack(tree) {
+  if(tree === null) return
+  const stack = Stack()
+  stack.push(tree)
+  const list = []
+  while(stack.size > 0) {
+    const lastNode = stack.pop()
+    list.push(lastNode.value)
+    if(lastNode.left) stack.push(lastNode.left)
+    if(lastNode.right) stack.push(lastNode.right)
+  }
+
+  return list
+  
 }
 
 function traverseBreadth(tree, queue = Queue()) {
@@ -46,6 +63,30 @@ function placeInTree(tree, node) {
   }
 }
 
+function placeInTreeWithStack(tree, node) {
+  if(tree === null) return
+  const stack = Stack()
+  stack.push(tree)
+  while(stack.size > 0) {
+    const currentNode = stack.pop()
+    
+    if(currentNode.left === null && node.value < currentNode.value) {
+      currentNode.left = node
+      break
+    }
+    if(currentNode.right === null && node.value >= currentNode.value) {
+      currentNode.right = node
+      break
+    }
+    if(node.value >= currentNode.value) {
+      stack.push(currentNode.right)
+    }
+    if(node.value < currentNode.value) {
+      stack.push(currentNode.left)
+    }
+  }
+}
+
 function makeTree(arr) {
   // reverse it so we can pop instead of shift.
   arr.reverse()
@@ -59,6 +100,17 @@ function makeTree(arr) {
 
   return head
 }
+
+const prettyPrint = (node, prefix = '', isLeft = true) => {
+  if (node.right !== null) {
+    prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+  }
+  console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.value}`);
+  if (node.left !== null) {
+    prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+  }
+}
+
 const myTree = makeTree([5, 1, 2, 3, 6, 7, 8])
 console.log('mytree', myTree)
 
@@ -66,3 +118,7 @@ console.log('regualar traversal')
 traverseDepth(myTree) 
 console.log('breadth traversal')
 traverseBreadth(myTree)
+console.log(traverseDepthWithStack(myTree))
+prettyPrint(myTree)
+placeInTreeWithStack(myTree, BinaryNode(0))
+prettyPrint(myTree)
