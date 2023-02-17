@@ -18,7 +18,7 @@ function traverseDepth(tree) {
   traverseDepth(tree.right)
   traverseDepth(tree.left)
 }
-['a','b','c','d']
+
 function traverseDepthWithStack(tree) {
   if(tree === null) return
   const stack = Stack()
