@@ -84,8 +84,7 @@ function LinkedList() {
   const toString = () => {
     if(head === null) return 'null'
     let string = ''
-    traverseList(head, (node) => (string += `(${node.value}) -> `) )
-    console.log(string)
+    traverseList(head, (node) => string += `(${node.value}) -> `)
     string += 'null'
     return string
   }
