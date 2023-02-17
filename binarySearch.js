@@ -19,6 +19,15 @@ function binarySearch(array, value, start = 0, end = array.length - 1) {
   throw new Error("Something went wrong, could not compare if value is less than or greater array elements")
 }
 
+function traveseArrayBinarily(array, start = 0, end = array.length - 1) {
+  /* traverse the whole array without searching */
+  if(end < start) return
+  const mid = Math.floor((start + end) / 2)
+  console.log(array[mid])
+  traveseArrayBinarily(array, start, mid - 1)
+  traveseArrayBinarily(array, mid + 1, end)
+}
+
 function binarySearchIterative(array, value) {
   let start = 0;
   let end = array.length - 1
