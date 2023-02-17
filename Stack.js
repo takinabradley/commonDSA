@@ -1,3 +1,5 @@
+import addGetter from "./addGetter.js"
+
 function StackNode(value) {
   const node = Object.create(null)
   node.next = null
@@ -7,9 +9,11 @@ function StackNode(value) {
 
 function Stack() {
   let top = null
+  let size = 0
 
   const push = (value) => {
     const newNode = StackNode(value)
+    size++
     if(top === null) {
       top = newNode
     } else {
@@ -23,21 +27,24 @@ function Stack() {
     if(top === null) {
       return null
     } else if(top.next === null) {
+      size--
       const node = top
       top = null
       return node.value
     } else {
+      size--
       const node = top
       top = top.next
       return node.value
     }
   }
 
-  return Object.create(null, {
-    top: {enumerable: true, get() {return top}},
-    push: {enumerable: true, value: push},
-    pop: {enumerable: true, value: pop}
+  const stack = Object.assign(Object.create(null), {
+    push,
+    pop
   })
+  addGetter(stack, 'size', () => size)
+  return stack
 }
 
 function LimitedStack(size) {
@@ -84,3 +91,6 @@ function LimitedStack(size) {
     currentSize: {enumerable: true, get() {return currentSize}}
   })
 }
+
+export default Stack
+export {LimitedStack}
