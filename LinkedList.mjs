@@ -1,11 +1,5 @@
 import addGetter from './addGetter.mjs'
-
-function Node(value) {
-  const node = Object.create(null)
-  node.value = value
-  node.next = null
-  return node
-}
+import ListNode from './ListNode.mjs'
 
 function LinkedList() {
   let head = null
@@ -14,11 +8,11 @@ function LinkedList() {
 
   const append = (value) => {
     if(!tail) {
-      const headNode = Node(value)
+      const headNode = ListNode(value)
       head = headNode
       tail = headNode
     } else {
-      const newNode = Node(value)
+      const newNode = ListNode(value)
       tail.next = newNode
       tail = newNode
     }
@@ -28,11 +22,11 @@ function LinkedList() {
 
   const prepend = (value) => {
     if(!head) {
-      const headNode = Node(value)
+      const headNode = ListNode(value)
       head = headNode
       tail = headNode
     } else {
-      const newNode = Node(value)
+      const newNode = ListNode(value)
       newNode.next = head
       head = newNode
     }
@@ -127,7 +121,7 @@ function LinkedList() {
       return true
     }
     if(index === size) {
-      const newTail = Node(value)
+      const newTail = ListNode(value)
       const oldTail = tail
       oldTail.next = newTail
       newTail.next = null
@@ -136,7 +130,7 @@ function LinkedList() {
       return true
     }
     
-    const newNode = Node(value)
+    const newNode = ListNode(value)
     const nodeBefore = nodeAt(head, index - 1)
     const nodeAtIndex = nodeAt(head, index)
     nodeBefore.next = newNode
