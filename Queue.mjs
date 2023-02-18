@@ -1,16 +1,11 @@
-function QueueNode(value) {
-  const node = Object.create(null)
-  node.value = value
-  node.next = null
-  return node
-}
+import ListNode from "./ListNode.mjs"
 
 function Queue() {
   let front = null
   let rear = null
 
   function enqueue(value) {
-    const newNode = QueueNode(value)
+    const newNode = ListNode(value)
     if(rear === null) {
       //if queue is empty, set front and rear to the only node
       front = newNode
@@ -88,7 +83,7 @@ function LimitedQueue2(size) {
 
   const isFull = () => currentLength === size
   function enqueue(value) {
-    const newNode = QueueNode(value)
+    const newNode = ListNode(value)
     if(rear === null) {
       currentLength++
       //if queue is empty, set front and rear to the only node

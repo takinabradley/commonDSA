@@ -1,18 +1,12 @@
 import addGetter from "./addGetter.mjs"
-
-function StackNode(value) {
-  const node = Object.create(null)
-  node.next = null
-  node.value = value
-  return node
-}
+import ListNode from "./ListNode.mjs"
 
 function Stack() {
   let top = null
   let size = 0
 
   const push = (value) => {
-    const newNode = StackNode(value)
+    const newNode = ListNode(value)
     size++
     if(top === null) {
       top = newNode
@@ -55,7 +49,7 @@ function LimitedStack(size) {
   const isFull = () => currentSize === size
   const push = (value) => {
     if(isFull()) throw Error('Stack is full!')
-    const newNode = StackNode(value)
+    const newNode = ListNode(value)
     if(top === null) {
       top = newNode
     } else {
