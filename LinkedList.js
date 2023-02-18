@@ -1,4 +1,4 @@
-import addGetter from './addGetter.js'
+import addGetter from './addGetter.mjs'
 
 function Node(value) {
   const node = Object.create(null)

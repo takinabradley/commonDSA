@@ -1,4 +1,4 @@
-import addGetter from "./addGetter.js"
+import addGetter from "./addGetter.mjs"
 
 function StackNode(value) {
   const node = Object.create(null)

@@ -1,5 +1,5 @@
-import { Queue } from "./Queue.js"
-import Stack from "./Stack.js"
+import { Queue } from "./Queue.mjs"
+import Stack from "./Stack.mjs"
 
 function BinaryNode(value) {
   const node = Object.create(null)
@@ -14,8 +14,9 @@ function traverseDepth(tree) {
   /* also inorder (left -> root -> right) and postorder (left -> right -> root) */
   /* is it as easy as just changing where the log is in the search? */
   if (tree === null) return
-  console.log(tree.value)
+
   traverseDepth(tree.right)
+  console.log(tree.value)
   traverseDepth(tree.left)
 }
 
@@ -49,15 +50,15 @@ function traverseBreadth(tree, queue = Queue()) {
 }
 
 function traverseBreadthRecursive(tree, queue) {
-  if(!queue && tree) {
+  if (!queue && tree) {
     queue = Queue()
     queue.enqueue(tree)
   }
-  if(queue.front === null) return
+  if (queue.front === null) return
   const dequeued = queue.dequeue()
   console.log(dequeued.value)
-  if(dequeued.left) queue.enqueue(dequeued.left)
-  if(dequeued.right) queue.enqueue(dequeued.right)
+  if (dequeued.left) queue.enqueue(dequeued.left)
+  if (dequeued.right) queue.enqueue(dequeued.right)
   traverseBreadthRecursive(null, queue)
 }
 
@@ -138,7 +139,10 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 }
 
-const myTree = makeTree([5, 1, 2, 3, 6, 7, 8])
+const myTree = makeTree([
+  5, 0, 1, 10000, 43, 57, 9992, 12, 3, 6565, 79, 123213, 462, 762, 545, 463, 1,
+  54, 145, 4351,
+])
 console.log("mytree", myTree)
 
 console.log("regualar traversal")
